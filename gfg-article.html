@@ -1,0 +1,273 @@
+<p>When you think of "artificial intelligence", you might think of its popular subsets (ML & DL), or the training and
+	testing of your carefully calibrated models, the pains and revisions needed to improve your test accuracy, or even
+	the algorithms involved in this field of Computer Science. All the same, this article will <em>not</em> be focusing
+	on those aspects of AI; instead, it will give an overview about an important but not so popular application of it:
+	the Edge AI, which is, in loose terms, a crossbreed between AI and IoT.</p>
+
+<h1> Introduction to Edge AI </h1>
+
+<ul>
+	<li>In its very core, "edge" refers to the processing that happens <em>locally</em> (instead of taking place in the
+		"cloud").</li>
+	<li>Edge AI is essentially needed where <em>low latency</em> is required, or where network might not be available
+	</li>
+	<li>It is mainly used for <em>real-time decision making</em> </li>
+</ul>
+
+<p><strong>Intuitive application.</strong> Think of a self-driving car. Can it really rely upon cloud computing all the
+	time? If you think about it, a self-driving car has to constantly make decisions. When such a car is driving itself
+	across the road, and it sees a pedestrian a certain distance ahead, it simply cannot wait for the data it receives
+	from the environment to be sent over to the cloud, get processed, receive the processed result, and infer decisions
+	from these results. By that time, it might be too late due to potential network latency. The decision on how to
+	avoid this moving pedestrian needs to be made in real-time. It is cases like these that require running AI the edge,
+	locally, for making decisions.</p>
+
+<h2>Reasons for Development at the Edge</h2>
+
+<ol>
+	<li>Proliferation of devices, that is to say, a rapid growth in number of devices</li>
+	<li>Need for low-latency computations, like the self-driving car example above</li>
+	<li>Need for disconnected or decentralized devices</li>
+	<li>Need for handling sensitive data (like medical data) that are too risky to be sent over the cloud for security
+		concerns</li>
+</ol>
+
+<h2>Table of Contents</h2>
+
+<p>This article is divided into the following <em>four</em> sections that cover Edge AI in a high-level way.</p>
+
+<ol>
+	<li>Leveraging pre-trained models</li>
+	<li>The Model Optimizer</li>
+	<li>The Inference Engine</li>
+	<li>Deploying an Edge App</li>
+</ol>
+
+These sections will now be explored one by one.
+
+<h1>Leveraging Pre-Trained Models</h1>
+
+<p>While performing AI at the edge, we cannot expect all the training of data to happen locally. The existence of models
+	that are already trained is of paramount importance.</p>
+
+<h2>The Open-VINO toolkit</h2>
+
+<ul>
+	<li>One of the most recommeneded tools for performing AI at the edge is the Open-VINO toolkit. It stands for
+		<strong>Visual Inferencing and Neural Network Optimization</strong>.</li>
+	<li>
+		It is an open source library useful for Egde AI for mainly two reasons:
+		<ol>
+			<li>Its plethora of pre-trained models</li>
+			<li>The performance maximizations it provides</li>
+		</ol>
+	</li>
+	<li>It enables running at the edge by optimizing for speed and size.</li>
+</ul>
+
+<h2>Computer Vision Models</h2>
+
+<ol>
+	<li>
+		<h3>Classification</h3>
+		<ul>
+			<li>Determines what class does an object in an image belong to.</li>
+			<li>These classifications can be associated with a probability to signify how confident the classification
+				is.</li>
+		</ul>
+		<p>For example, the inputs <em>A, 3,</em> and <em>%</em> can be classified into classes like <em>letter,
+				digit,</em> and <em>symbol</em> respectively.</p>
+	</li>
+	<li>
+		<h3>Detection</h3>
+		<ul>
+			<li>Determines the presence and location of objects in an image.</li>
+			<li>Often surrounds the objects with a <strong>bounding box</strong>.</li>
+		</ul>
+	</li>
+	<li>
+		<h3>Segmentation</h3>
+		<ul>
+			<li>Classifies each and every pixel of the object, and provides a granular understanding of the image.</li>
+			<li>Types of segmentations: semantic and instance.</li>
+		</ul>
+	</li>
+
+</ol>
+
+<h2>Handling Network Outputs</h2>
+<table>
+	<thead>
+		<th>Computer Vision Model</th>
+		<th>Output</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Classification</td>
+			<td>An array with softmax possibilities by class</td>
+		</tr>
+		<tr>
+			<td>Classification</td>
+			<td>An array with softmax possibilities by class</td>
+		</tr>
+		<tr>
+			<td>Detection</td>
+			<td>
+				Array: <code>box[0..5]</code>, where:
+				<li><code>box[0] = </code> class</li>
+				<li><code>box[1] = </code> threshould</li>
+				<li><code>box[2], box[3] = </code> x<sub>min</sub>, y<sub>min</sub></li>
+				<li><code>box[4], box[5] = </code> x<sub>max</sub>, y<sub>max</sub></li>
+			</td>
+		</tr>
+		<tr>
+			<td>Segmentation</td>
+			<td>An array with class for each pixel</td>
+		</tr>
+	</tbody>
+</table>
+
+<h1>The Model Optimizer</h1>
+
+<p>Basically, a model optimizer is a program that converts an input model into an <strong>Intermediate
+		Representation</strong> (IR), that can then be fed to an inference engine.</p>
+
+<p>A model optimizer provides improvements in increased model size and speed, but makes trade-offs with loss in
+	accuracy. However, this accuracy loss is often minimized.</p>
+
+<p>Note that while using the model optimizer provided by the Open-VINO toolkit, it is mandatory to feed in a pre-trained
+	model.</p>
+
+<h2>Optimization Techniques</h2>
+
+<ol>
+	<li>
+		<h3>Quantization.</h3>
+		<p>Refers to the number of bits used to represent the weights and biases of the model. This is often done by
+			playing around with and setting the model precisions. The default precision format in the optimizer is
+			<strong>FP32</strong>, while FP16 is also available.</p>
+		<table>
+			<thead>
+				<th>Model Before Quantization</th>
+				<th>Model After Quantization</th>
+			</thead>
+			<tr>
+				<td style="color: green">higher accuracy</td>
+				<td style="color: red">lower accuracy (but this loss is minimized)</td>
+			</tr>
+			<tr>
+				<td style="color: red">larger size</td>
+				<td style="color: green">smaller size</td>
+			</tr>
+			<tr>
+				<td style="color: red">slower computer speed</td>
+				<td style="color: green">faster computer speed</td>
+			</tr>
+		</table>
+	</li>
+
+	<li>
+		<h3>Freezing</h3>
+		<ul>
+			<li>Used for Tensorflow models</li>
+			<li>Removes operations and metadata only needed for training and not inference; eg., backpropagation.</li>
+		</ul>
+	</li>
+
+	<li>
+		<h3>Fusion</h3>
+		<ul>
+			<li>Combines multiple layers of operations into a single layer.</li>
+			<li>Useful when different operations peform in different kernels, but fused operations peform in the same
+				kernel.</li>
+			<li>In this way, the overhead while switching from one kernel to the next is mitigated.</li>
+		</ul>
+	</li>
+</ol>
+
+<h3>Intermediate Representation (IR)</h3>
+
+<p>Refers to the standard structure and naming of neural network architectures in the OpenVINO toolkit. For example, the	terms "Conv2D" (Tensorflow), "Convolution" (Caffe) and "Conv" (ONNX) are all translated to "Convolution" in the IR.
+</p>
+
+<h3>Output files in IR</h3>
+<ol>
+	<li><strong>.xml file</strong>: holds the model architecture and other important metadata.</li>
+	<li><strong>.bin file</strong>: contains the weights and biases in binary format.</li>
+</ol>
+
+<p><strong>Note</strong>: Both these files are needed for inference.</p>
+
+<h3>Custom Layers</h3>
+<ul>
+	<li>The model may have <em>unsupported layers</em> that need to be handled.</li>
+	<li>In order to handle the unsupported layers, you may:
+		<ul>
+			<li>run the layer with the original frames; or</li>
+			<li>write a <strong>custom layer</strong> that supports model optimizer.</li>
+		</ul>
+	</li>
+</ul>
+
+<h1>The Inference Engine</h1>
+
+<p>The inference engine provides a library of computer vision functions needed to run the actual inference on the model. It only works with models that are already in their IR format.</p>
+
+<h2>Devices supported by the Inference Engine</h2>
+<p>
+	The inference engine provided by the OpenVINO toolkit supports all Intel processors, including:
+	<ol>
+		<li>Intel CPUs</li>
+		<li>Intel GPUs</li>
+		<li>Intel FPGAs (Field Programmable Gate Arrays)</li>
+		<li>Intel VPUs (Visual Processing Unit, like the Neural Compute Stick)</li>
+	</ol>
+</p>
+
+<h2>Using the Inference Engine with IR</h2>
+<p>
+	Performing an inference requires the following broad steps:
+	<ol>
+		<li>Load the IR into the inference engine</li>
+		<li>Send inference requests to the inference engine</li>
+		<li>Handle results received from the inference engine</li>
+	</ol>
+</p>
+
+<h1>Deploying an Egde App</h1>
+
+<p>
+	Deploying an edge app involves:
+	<ul>
+		<li>handing input streams,</li>
+		<li>processing model outputs</li>
+		and more		
+	</ul>
+</p>
+
+<h2>Handling Input Streams</h2>
+<p>
+	This involves:
+	<ul>
+		<li>loading input video capture from webcam / video file</li>
+		<li>resizing the frames to a suitable size</li>
+		<li>detecting edges using algorithms like Canny Edge Detection</li>
+		<li>making a 3-channel image of the frames read</li>
+		<li>writing the processed frames</li>
+		<li>destroying or closing resources before capturing object</li>
+	</ul>
+</p>
+
+<h2>Handling Output Streams</h2>
+<p>
+	This involves:
+	<ul>
+		<li>handling bounding boxes as a result of segmentation,</li>
+		<li>feeding results from one model into another model,</li>
+		<li>extracting useful statistics from the results and making decisions from them.</li>
+	</ul>
+</p>
+
+<p>The rest of this article covers some more topics related to deploying the app.</p>
+
+

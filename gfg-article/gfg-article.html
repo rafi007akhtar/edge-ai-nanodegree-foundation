@@ -9,27 +9,20 @@
 <ul>
 	<li>In its very core, "edge" refers to the processing that happens <em>locally</em> (instead of taking place in the
 		"cloud").</li>
-	<li>Edge AI is essentially needed where <em>low latency</em> is required, or where network might not be available
+	<li>Edge AI is essentially needed where <em>low latency</em> is required, or where network might not be available.
 	</li>
-	<li>It is mainly used for <em>real-time decision making</em> </li>
+	<li>It is mainly used for <em>real-time decision making.</em> </li>
 </ul>
 
-<p><strong>Intuitive application.</strong> Think of a self-driving car. Can it really rely upon cloud computing all the
-	time? If you think about it, a self-driving car has to constantly make decisions. When such a car is driving itself
-	across the road, and it sees a pedestrian a certain distance ahead, it simply cannot wait for the data it receives
-	from the environment to be sent over to the cloud, get processed, receive the processed result, and infer decisions
-	from these results. By that time, it might be too late due to potential network latency. The decision on how to
-	avoid this moving pedestrian needs to be made in real-time. It is cases like these that require running AI the edge,
-	locally, for making decisions.</p>
+<p><strong>Intuitive application.</strong> Think of a self-driving car. Can it really rely upon cloud computing all the	time? If you think about it, a self-driving car has to constantly make decisions. When such a car is driving itself across the road, and it sees at a pedestrian a certain distance ahead, it simply cannot wait for the data it receives from the environment to be sent over to the cloud, get processed, receive the processed result, and infer decisions from these results. By that time, it might be too late due to potential network latency. The decision on how to avoid this moving pedestrian needs to be made in real-time. It is cases like these that require running AI at the edge, locally, for making decisions.</p>
 
 <h2>Reasons for Development at the Edge</h2>
 
 <ol>
-	<li>Proliferation of devices, that is to say, a rapid growth in number of devices</li>
-	<li>Need for low-latency computations, like the self-driving car example above</li>
-	<li>Need for disconnected or decentralized devices</li>
-	<li>Need for handling sensitive data (like medical data) that are too risky to be sent over the cloud for security
-		concerns</li>
+	<li>Proliferation of devices, that is to say, a rapid growth in number of devices.</li>
+	<li>Need for low-latency computations, like the self-driving car example above.</li>
+	<li>Need for disconnected or decentralized devices.</li>
+	<li>Need for handling sensitive data (like medical data) that are too risky to be sent over the cloud for security concerns.</li>
 </ol>
 
 <h2>Table of Contents</h2>
@@ -47,8 +40,7 @@ These sections will now be explored one by one.
 
 <h1>Leveraging Pre-Trained Models</h1>
 
-<p>While performing AI at the edge, we cannot expect all the training of data to happen locally. The existence of models
-	that are already trained is of paramount importance.</p>
+<p>While performing AI at the edge, we cannot expect all the training of data to happen locally. The existence of models that are already trained is of paramount importance.</p>
 
 <h2>The Open-VINO toolkit</h2>
 
@@ -80,8 +72,7 @@ These sections will now be explored one by one.
 			<li>These classifications can be associated with a probability to signify how confident the classification
 				is.</li>
 		</ul>
-		<p>For example, the inputs <em>A, 3,</em> and <em>%</em> can be classified into classes like <em>letter,
-				digit,</em> and <em>symbol</em> respectively.</p>
+		<p>For example, the inputs <em>A, 3,</em> and <em>%</em> can be classified into classes like <em>letter, digit,</em> and <em>symbol</em> respectively.</p>
 	</li>
 	<li>
 		<h3>Detection</h3>
@@ -143,23 +134,18 @@ These sections will now be explored one by one.
 
 <h1>The Model Optimizer</h1>
 
-<p>Basically, a model optimizer is a program that converts an input model into an <strong>Intermediate
-		Representation</strong> (IR), that can then be fed to an inference engine.</p>
+<p>Basically, a model optimizer is a program that converts an input model into an <strong>Intermediate Representation</strong> (IR), that can then be fed to an inference engine.</p>
 
-<p>A model optimizer provides improvements in increased model size and speed, but makes trade-offs with loss in
-	accuracy. However, this accuracy loss is often minimized.</p>
+<p>A model optimizer provides improvements in increased model size and speed, but makes trade-offs with loss in accuracy. However, this accuracy loss is often minimized.</p>
 
-<p>Note that while using the model optimizer provided by the Open-VINO toolkit, it is mandatory to feed in a pre-trained
-	model.</p>
+<p>Note that while using the model optimizer provided by the Open-VINO toolkit, it is mandatory to feed in a pre-trained	model.</p>
 
 <h2>Optimization Techniques</h2>
 
 <ol>
 	<li>
 		<h3>Quantization.</h3>
-		<p>Refers to the number of bits used to represent the weights and biases of the model. This is often done by
-			playing around with and setting the model precisions. The default precision format in the optimizer is
-			<strong>FP32</strong>, while FP16 is also available.</p>
+		<p>Refers to the number of bits used to represent the weights and biases of the model. This is often done by playing around with and setting the model precisions. The default precision format in the optimizer is <strong>FP32</strong>, while FP16 is also available.</p>
 		<table>
 			<thead>
 				<th>Model Before Quantization</th>
@@ -239,8 +225,10 @@ These sections will now be explored one by one.
 		<li>Intel CPUs</li>
 		<li>Intel GPUs</li>
 		<li>Intel FPGAs (Field Programmable Gate Arrays)</li>
-		<li>Intel VPUs (Visual Processing Unit, like the Neural Compute Stick)</li>
+		<li>Intel VPUs (Visual Processing Unit, like the Neural Compute Stick; see image below)</li>
 	</ol>
+	The below image shows a Neural Compute Stick.
+	<img src="https://raw.githubusercontent.com/rafi007akhtar/edge-ai-nanodegree-foundation/master/gfg-article/ncs-2.jpg" alt="Neural Compute Stick 2" title="Neural Compute Stick 2">
 </p>
 
 <h2>Using the Inference Engine with IR</h2>
@@ -292,3 +280,12 @@ These sections will now be explored one by one.
 	Handling these streams require a good hold of the OpenCV library. <a href="https://docs.opencv.org/master/d9/df8/tutorial_root.html">These tutorials</a> are a good place to begin from.
 </blockquote>
 
+<h1>Ending Notes and References</h1>
+
+<p>So far, we have managed to scratch only a surface of the Edge AI. There is a world of information out there!</p>
+
+<p>The bulk of the content of this article was referenced from <a href="https://www.udacity.com/scholarships/intel-edge-ai-scholarship">this course on Udacity.</a></p>
+
+<p>Although this article was mainly theoretical, I have implemented almost all the above concepts (following the above mentioned course, ofcourse) on <a href="https://github.com/rafi007akhtar/edge-ai-nanodegree-foundation">this GitHub repository</a>. I will frequently be updating it with more instructions on its usage and more implementations. For now,you may follow it for some basic implementations of the above concepts. </p>
+
+<p>Lastly, I hope you enjoyed this read. If you came across any mistakes, please let me know in the comments.</p>
